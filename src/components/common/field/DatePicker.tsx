@@ -62,7 +62,7 @@ const MONTH_TEXT = [
   'November',
   'December',
 ];
-const EARLIEST_AVAILABLE_YEAR = 1990;
+const EARLIEST_AVAILABLE_YEAR = 1981;
 const LATEST_AVAILABLE_YEAR = new Date().getFullYear() + 20;
 const YEARS = chunk(
   chunk(
@@ -264,7 +264,7 @@ const CalendarController = () => {
       <button
         onClick={() => setIsYearIndexSelectorOpen(true)}
         type="button"
-        className={classNames('pt-[0.5625rem] pb-[0.9375rem]')}
+        className={classNames('pl-[1px] pt-[0.625rem] pb-[0.875rem]')}
       >
         {MONTH_TEXT[currentMonthIndex]} {currentYearIndex}
       </button>
@@ -341,7 +341,7 @@ const CalendarDateController = () => {
                   className={classNames(
                     'mr-1.5 last:mr-0',
                     'w-9 h-9',
-                    'text-center leading-[2.25rem]',
+                    'text-center text-[0.875rem] leading-[2.25rem]',
                     'rounded-[50%]',
                     'hover:cursor-pointer hover:bg-white hover:text-[#080808]',
                     { 'pointer-events-none': !inMonth },
@@ -376,10 +376,14 @@ const CalenderFooter = () => {
           'text-sm font-semibold leading-[1.5rem]',
         )}
       >
-        <button type="button" className="mr-[4.375rem]" onClick={onCancel}>
+        <button type="button" className="mr-[4.375rem] w-12" onClick={onCancel}>
           Cancel
         </button>
-        <button type="button" onClick={() => onConfirm(currentDate)}>
+        <button
+          type="button"
+          className="w-[1.3125rem]"
+          onClick={() => onConfirm(currentDate)}
+        >
           OK
         </button>
       </div>
@@ -448,6 +452,7 @@ const CalenderYearController = () => {
                       'w-[3.8125rem] h-6',
                       'text-base text-center',
                       'hover:cursor-pointer hover:bg-white hover:text-[#080808]',
+                      'rounded-sm',
                       isThisYear && ['bg-primary-blue'],
                       isSelectedYear && [
                         'border border-solid border-primary-blue hover:border-white',
@@ -481,7 +486,7 @@ const Calendar: React.FC<{
       isOpen={isOpen}
       wrapperRef={wrapperRef}
       customRef={modalRef}
-      // heightCalculatorDependencies={[currentYearIndex, currentMonthIndex]}
+      offset={14}
     >
       <div className="text-white">
         <CalendarHeader />
@@ -548,14 +553,15 @@ export const DatePicker: React.FC<Props> = function ({
         label={label}
         onClick={onFieldClick}
         isFocus={isFocus}
+        className="font-['Ubuntu']"
       >
         <p
-          className={classNames('text-base', 'text-white', {
+          className={classNames('text-base', 'text-white tracking-[0.15px]', {
             'text-opacity-30': !hasValue,
           })}
         >
           <ConditionalFragment condition={hasValue}>
-            {value && format(value, 'dd/MM/yyyy')}
+            {value && format(value, 'MM/dd/yyyy')}
           </ConditionalFragment>
           <ConditionalFragment condition={!hasValue}>
             {placeholder}

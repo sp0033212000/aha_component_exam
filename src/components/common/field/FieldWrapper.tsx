@@ -8,12 +8,13 @@ interface Props extends ElementProps<'div'> {
 }
 
 const FieldWrapper = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
-  ({ children, label, isFocus, ...divProps }, ref) => (
+  ({ children, className, label, isFocus, ...divProps }, ref) => (
     <div
       ref={ref}
       role="presentation"
       id="password-field-wrapper"
       className={classNames(
+        className,
         'relative',
         'px-[0.5625rem] pb-3 pt-4',
         'w-full',
@@ -30,9 +31,9 @@ const FieldWrapper = forwardRef<HTMLDivElement, PropsWithChildren<Props>>(
     >
       <span
         className={classNames(
-          'absolute top-0 transform -translate-y-1/2',
+          'absolute top-0 transform translate-y-[calc(-50%-1.5px)]',
           'px-1',
-          'text-[0.75rem] leading-[1.125rem] text-white',
+          'text-[0.75rem] leading-[1.125rem] text-white tracking-[0.4px]',
           'bg-bg-dark',
         )}
       >

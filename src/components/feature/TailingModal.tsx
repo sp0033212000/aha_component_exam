@@ -20,6 +20,7 @@ interface Props {
   id?: string;
   style?: ElementProps<'div'>['style'];
   className?: ElementProps<'div'>['className'];
+  offset?: number;
 }
 
 const TailingModal: React.FC<PropsWithChildren<Props>> = function ({
@@ -30,6 +31,7 @@ const TailingModal: React.FC<PropsWithChildren<Props>> = function ({
   id,
   style,
   className,
+  offset = 20,
 }) {
   const [recalculateTop, setRecalculateTop] = useState<number>(0);
   useEffect(() => {
@@ -63,7 +65,7 @@ const TailingModal: React.FC<PropsWithChildren<Props>> = function ({
 
   const top = useMemo(() => {
     if (!wrapperRef.current || !modalRef.current) return 0;
-    const OFFSET = 20;
+    const OFFSET = offset;
     const windowHeight = window.innerHeight;
     const wrapperBounding = wrapperRef.current.getBoundingClientRect();
     const wrapperTop = wrapperBounding.top;

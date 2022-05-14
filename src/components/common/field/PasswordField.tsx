@@ -57,7 +57,7 @@ const ValidItem: React.FC<
       <p
         className={classNames(
           'flex-shrink-0 flex-1',
-          'text-white text-sm leading-[1.3125rem]',
+          'text-white text-sm leading-[1.3125rem] tracking-[0.25px]',
         )}
       >
         {children}
@@ -160,7 +160,7 @@ export const PasswordField = forwardRef<HTMLInputElement, Props>(
             className={classNames(
               'relative',
               'flex items-center',
-              'w-full h-full',
+              'w-full h-6',
             )}
           >
             <input

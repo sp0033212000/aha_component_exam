@@ -22,7 +22,7 @@ const App: React.FC = function () {
 
   return (
     <div className={classNames('p-4', 'w-screen h-[100rem]', 'bg-bg-dark')}>
-      <div className="w-[335px] mb-10">
+      <div className="w-[335px] mb-10 font-['Ubuntu']">
         <PasswordField
           label="Password"
           placeholder="Password"
@@ -30,7 +30,7 @@ const App: React.FC = function () {
           onChange={onPasswordChange}
         />
       </div>
-      <div className="w-[335px]">
+      <div className="w-[335px] font-['Inter']">
         <DatePicker
           label="Birthday"
           placeholder="mm/dd/yyyy"
