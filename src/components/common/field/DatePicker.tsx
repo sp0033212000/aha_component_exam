@@ -125,9 +125,13 @@ interface CalendarContextProviderProps
   defaultDate: Date | null;
 }
 
-const CalendarContextProvider: React.FC<
-  PropsWithChildren<CalendarContextProviderProps>
-> = function ({ children, onCancel, onConfirm, isOpen, defaultDate }) {
+const CalendarContextProvider: React.FC<PropsWithChildren<CalendarContextProviderProps>> = function({
+                                                                                                      children,
+                                                                                                      onCancel,
+                                                                                                      onConfirm,
+                                                                                                      isOpen,
+                                                                                                      defaultDate
+                                                                                                    }) {
   const [currentDate, setCurrentDate] = useState<Date>(new Date());
   const [currentYearIndex, setCurrentYearIndex] = useState<number>(
     new Date().getFullYear(),
@@ -217,7 +221,7 @@ const CalendarContextProvider: React.FC<
 };
 
 const MonthControlButton: React.FC<PropsWithChildren<ElementProps<'button'>>> =
-  function ({ children, className, type = 'button', ...buttonProps }) {
+  function({ children, className, type = 'button', ...buttonProps }) {
     return (
       <button
         type={type}
@@ -412,6 +416,13 @@ const CalenderYearController = () => {
     }
   }, [currentYearIndex]);
 
+  const onCancel = useCallback(() => setIsYearIndexSelectorOpen(false), []);
+
+  const onConfirm = useCallback(() => {
+    setCurrentYearIndex(selectedYearIndex);
+    setIsYearIndexSelectorOpen(false)
+  }, [selectedYearIndex]);
+
   return (
     <>
       <div className="flex justify-between mb-[1.125rem]">
@@ -479,14 +490,14 @@ const CalenderYearController = () => {
           <button
             type="button"
             className="mr-[4.375rem] w-12"
-            onClick={() => setIsYearIndexSelectorOpen(false)}
+            onClick={onCancel}
           >
             Cancel
           </button>
           <button
             type="button"
             className="w-[1.3125rem]"
-            onClick={() => setCurrentYearIndex(selectedYearIndex)}
+            onClick={onConfirm}
           >
             OK
           </button>
@@ -500,7 +511,7 @@ const Calendar: React.FC<{
   isOpen: boolean;
   wrapperRef: MutableRefObject<HTMLDivElement | null>;
   modalRef: MutableRefObject<HTMLDivElement | null>;
-}> = function ({ isOpen, wrapperRef, modalRef }) {
+}> = function({ isOpen, wrapperRef, modalRef }) {
   const { isYearIndexSelectorOpen } = useCalendarContext();
 
   return (
@@ -534,12 +545,12 @@ interface Props {
   onChange: (date: Date) => void;
 }
 
-export const DatePicker: React.FC<Props> = function ({
-  label,
-  value,
-  placeholder,
-  onChange,
-}) {
+export const DatePicker: React.FC<Props> = function({
+                                                      label,
+                                                      value,
+                                                      placeholder,
+                                                      onChange,
+                                                    }) {
   const [isFocus, setIsFocus] = useState<boolean>(false);
 
   const fieldRef = useRef<HTMLDivElement | null>(null);
