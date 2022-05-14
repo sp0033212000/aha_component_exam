@@ -392,9 +392,12 @@ const CalenderFooter = () => {
 };
 
 const CalenderYearController = () => {
-  const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
   const { currentYearIndex, setCurrentYearIndex, setIsYearIndexSelectorOpen } =
     useCalendarContext();
+
+  const [currentPageIndex, setCurrentPageIndex] = useState<number>(0);
+  const [selectedYearIndex, setSelectedYearIndex] =
+    useState<number>(currentYearIndex);
 
   const thisYear = useRef<number>(new Date().getFullYear());
 
@@ -418,13 +421,9 @@ const CalenderYearController = () => {
         >
           <ArrowLeftIcon />
         </MonthControlButton>
-        <button
-          onClick={() => setIsYearIndexSelectorOpen(false)}
-          type="button"
-          className={classNames('pt-[0.5625rem] pb-[0.9375rem]')}
-        >
+        <p className={classNames('pt-[0.5625rem] pb-[0.9375rem]')}>
           {currentYearIndex}
-        </button>
+        </p>
         <MonthControlButton
           disabled={currentPageIndex === YEARS.length - 1}
           onClick={() => setCurrentPageIndex((prev) => prev + 1)}
@@ -432,7 +431,7 @@ const CalenderYearController = () => {
           <ArrowRightIcon />
         </MonthControlButton>
       </div>
-      <div className="pl-6 pr-[1.5625rem] mb-[1.6875rem]">
+      <div className="pl-6 pr-[1.5625rem] mb-[1.6875rem] min-w-[20rem]">
         {YEARS[currentPageIndex].map((yearsRow, index) => {
           return (
             <div
@@ -441,7 +440,7 @@ const CalenderYearController = () => {
             >
               {yearsRow.map((year) => {
                 const isThisYear = thisYear.current === year;
-                const isSelectedYear = year === currentYearIndex;
+                const isSelectedYear = year === selectedYearIndex;
 
                 return (
                   <div
@@ -452,13 +451,14 @@ const CalenderYearController = () => {
                       'w-[3.8125rem] h-6',
                       'text-base text-center',
                       'hover:cursor-pointer hover:bg-white hover:text-[#080808]',
+                      'border border-solid',
                       'rounded-sm',
                       isThisYear && ['bg-primary-blue'],
-                      isSelectedYear && [
-                        'border border-solid border-primary-blue hover:border-white',
-                      ],
+                      isSelectedYear
+                        ? ['border-primary-blue hover:border-white']
+                        : ['border-transparent'],
                     )}
-                    onClick={() => setCurrentYearIndex(year)}
+                    onClick={() => setSelectedYearIndex(year)}
                   >
                     {year}
                   </div>
@@ -467,6 +467,30 @@ const CalenderYearController = () => {
             </div>
           );
         })}
+      </div>
+      <div className={classNames('pb-4 pr-[1.6875rem]')}>
+        <div
+          className={classNames(
+            'flex justify-end items-center',
+            'px-4 py-2',
+            'text-sm font-semibold leading-[1.5rem]',
+          )}
+        >
+          <button
+            type="button"
+            className="mr-[4.375rem] w-12"
+            onClick={() => setIsYearIndexSelectorOpen(false)}
+          >
+            Cancel
+          </button>
+          <button
+            type="button"
+            className="w-[1.3125rem]"
+            onClick={() => setCurrentYearIndex(selectedYearIndex)}
+          >
+            OK
+          </button>
+        </div>
       </div>
     </>
   );
@@ -493,11 +517,11 @@ const Calendar: React.FC<{
         <ConditionalFragment condition={!isYearIndexSelectorOpen}>
           <CalendarController />
           <CalendarDateController />
+          <CalenderFooter />
         </ConditionalFragment>
         <ConditionalFragment condition={isYearIndexSelectorOpen}>
           <CalenderYearController />
         </ConditionalFragment>
-        <CalenderFooter />
       </div>
     </TailingModal>
   );
