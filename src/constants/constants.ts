@@ -8,7 +8,8 @@ export const PASSWORD_CONDITION: Array<{
   { description: 'Have at least one number', pattern: /[0-9]+/ },
   {
     description: 'Have at least one special character (!@#$...etc)',
-    pattern: /[!@#$%^&*?.]+/,
+    // eslint-disable-next-line
+    pattern: /[~`!@#$%^&*()_+-={}\[\]\\\/|;:'",<.>]+/,
   },
   { description: 'Longer than 8 characters', pattern: /^.{8,}/ },
 ];

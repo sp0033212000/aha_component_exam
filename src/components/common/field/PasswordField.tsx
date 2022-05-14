@@ -153,9 +153,8 @@ export const PasswordField = forwardRef<HTMLInputElement, Props>(
           role="presentation"
           id="password-field-wrapper"
           onClick={onWrapperClick}
-          isFocus={isFocus}
-          hasValue={isNotEmptyString(password)}
           label={label}
+          isFocus={isFocus}
         >
           <div
             className={classNames(
@@ -165,7 +164,7 @@ export const PasswordField = forwardRef<HTMLInputElement, Props>(
             )}
           >
             <input
-              ref={refMerge(ref)}
+              ref={refMerge(ref, inputRef)}
               className={classNames(
                 'w-full h-full',
                 'text-base text-transparent',
@@ -181,6 +180,7 @@ export const PasswordField = forwardRef<HTMLInputElement, Props>(
               value={password}
               type="password"
               {...inputProps}
+              aria-autocomplete="none"
             />
             <p
               className={classNames('absolute', 'text-white leading-[1.5rem]')}
